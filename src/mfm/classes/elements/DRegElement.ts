@@ -5,6 +5,7 @@ import { Site } from "../Site";
 import { EmptyElement } from "./EmptyElement";
 import { ResElement } from "./ResElement";
 import { Atom } from "../Atom";
+import { MFMUtils } from "../../utils/utils";
 
 export class DRegElement extends Elem {
   pDREG_CREATE: number;
@@ -23,6 +24,25 @@ export class DRegElement extends Elem {
   }
 
   exec(ew: EventWindow) {
+
+    //if there's an adjacent empty
+    if (ew.hasa( ew.getSubSet(EventWindow.ADJACENT4WAY), ElementTypes.EMPTY)) {
+      if (MFMUtils.oneIn(this.pDREG_CREATE)) {
+        ew.move( ew.self(), ew.typeAt(ElementTypes.EMPTY, ew.getSubSet(EventWindow.ADJACENT4WAY)), ElementTypes.DREG);
+      } else if( MFMUtils.oneIn(this.pRES_CREATE)) {
+        ew.move( ew.self(), ew.typeAt(ElementTypes.EMPTY, ew.getSubSet(EventWindow.ADJACENT4WAY)), ElementTypes.RES);
+      } else {
+        ew.move( ew.self(), ew.typeAt(ElementTypes.EMPTY, ew.getSubSet(EventWindow.ADJACENT4WAY));
+      }
+    } 
+    //if there's an adjacent dreg
+    else if( ew.hasa(ew.getSubSet(EventWindow.ADJACENT4WAY), ElementTypes.DREG) && MFMUtils.oneIn(this.pDREG_DESTROY) ) {
+      
+    } else if( MFMUtils.oneIn(this.pANY_DESTROY) ) {
+
+
+    }
+
     //get a random NESW site
     const availableSite: Site = ew.getAdjacent8Way();
 

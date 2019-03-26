@@ -18,4 +18,13 @@ export class MFMUtils {
 
     return new EventWindow(tile, { row: rr, col: rc });
   }
+
+  static oneIn(probability: number): boolean {
+    //you can't win if you don't play the game
+    if (probability < 1) {
+      return false;
+    }
+
+    return probability > 1 ? Math.random() * probability < 1 : true;
+  }
 }

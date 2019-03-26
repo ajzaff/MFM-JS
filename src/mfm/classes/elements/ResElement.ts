@@ -7,7 +7,11 @@ export class ResElement extends Elem {
     super(ElementTypes.RES.name, ElementTypes.RES.type);
   }
   exec(ew: EventWindow) {
-    ew.origin.swapAtoms(ew.getAdjacent8Way(ElementTypes.EMPTY));
+    if (ew.hasa(ew.getSubset(EventWindow.ADJACENT4WAY), ElementTypes.EMPTY)) {
+      ew.move(ew.self(), ew.typeAt(ElementTypes.EMPTY, ew.getSubset(EventWindow.LAYER1)));
+    }
+
+    //ew.origin.swapAtoms(ew.getAdjacent8Way(ElementTypes.EMPTY));
     super.exec(ew);
   }
 }

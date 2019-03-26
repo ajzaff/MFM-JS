@@ -228,6 +228,16 @@ export class EventWindow {
     return this.windowArray;
   }
 
+  self(): Site {
+    return this.getSubSet(EventWindow.ORIGIN)[0];
+  }
+
+  getSubSet(siteIndexes: number[]): Site[] {
+    return siteIndexes.map(i => {
+      return this.windowArray[i];
+    });
+  }
+
   //get 1 random site (of type)
   getRandom(specificType: IElementType = undefined): Site {
     return this.getRandomSite(this.getAll(specificType));
@@ -330,5 +340,94 @@ export class EventWindow {
 
   private getNearestSite(sites: Site[]): Site {
     return sites[0];
+  }
+
+  //CONDITIONS
+
+  isa(site: Site, type: IElementType): boolean {
+    return this.hasa([site], type);
+  }
+
+  hasa(sites: Site[], type: IElementType): boolean {
+    return this.filterSitesByType(sites, type).length > 0;
+  }
+
+  allare(sites: Site[], type: IElementType): boolean {
+    return this.filterSitesByType(sites, type).length === sites.length;
+  }
+
+  //TARGETS
+  any(type: IElementType): Site {
+    return this.getRandom(type);
+  }
+
+  atIndex(i: number): Site {
+    return this.getSiteByIndex(i);
+  }
+
+  anyAt(sites: Site[]): Site {
+    return sites[(Math.random() * sites.length) >> 0];
+  }
+
+  typeAt(type: IElementType, sites: Site[]): Site {
+    let newsites: Site[] = this.filterSitesByType(sites, type);
+    return sites[(Math.random() * newsites.length) >> 0];
+  }
+
+  //ACTIONS
+
+  create(site: Site, type: IElementType, options: any[] = undefined) {
+    site.atom = options ? new type.class(...options) : new type.class();
+  }
+  createMany(sites: Site[], type: IElementType, options: any[] = undefined) {
+    sites.forEach(site => {
+      this.create(site, type, options);
+    });
+  }
+
+  destroy(site: Site) {
+    site.killSelf();
+  }
+
+  destroyMany(sites: Site[]) {
+    sites.forEach(site => {
+      this.destroy(site);
+    });
+  }
+
+  swap(origin: Site, destination: Site) {
+    [origin.atom, destination.atom] = [destination.atom, origin.atom];
+  }
+
+  swapMany(originSites: Site[], destinationSites: Site[]) {
+    originSites.forEach((oSite, i) => {
+      if (i >= destinationSites.length) {
+        return;
+      }
+      let dSite = destinationSites[i];
+
+      this.swap(oSite, dSite);
+    });
+  }
+
+  move(origin: Site, destination: Site, leaveBehindType: IElementType = undefined) {
+    destination.atom = origin.atom;
+    if (leaveBehindType) {
+      origin.atom = new leaveBehindType.class();
+    } else {
+      origin.killSelf();
+    }
+  }
+
+  moveMany(originSites: Site[], destinationSites: Site[], leaveBehindType: IElementType = undefined) {
+    originSites.forEach((oSite, i) => {
+      if (i >= destinationSites.length) {
+        return;
+      }
+
+      let dSite: Site = destinationSites[i];
+
+      this.move(oSite, dSite, leaveBehindType);
+    });
   }
 }
