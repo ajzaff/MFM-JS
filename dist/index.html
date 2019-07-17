@@ -152,6 +152,8 @@
           <option value="60x40" selected>60x40</option>
 
           <option value="64x64">64x64</option>
+          <option value="96x64">96x64</option>
+          <option value="104x64">104x64</option>
           <option value="96x96">96x96</option>
           <option value="128x128">128x128</option>
         </select>
@@ -164,6 +166,9 @@
           :class="{selected: curSelectedElement === name}" @click="selectElement(name);">
           {{name}}
         </span>
+      </div>
+      <div class="dynamic-elements">
+        <input type="text" v-model="dynamicDef" style="width:100%;">
       </div>
       <div id="mfm"></div>
       <div><button @click="reload()">Clear Grid</button></div>

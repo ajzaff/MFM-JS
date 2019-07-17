@@ -29,7 +29,7 @@ export class MFMRenderer {
   curSelectedElement: string;
   webGLSupported: boolean = PIXI.utils.isWebGLSupported();
 
-  customSequence: string;
+  dynamicDef: string;
 
   tile: Tile;
 
@@ -108,6 +108,10 @@ export class MFMRenderer {
     }
   }
 
+  snapShot() {
+
+  }
+
   gameLoop(delta: number) {
     let ew: EventWindow;
 
@@ -119,9 +123,19 @@ export class MFMRenderer {
       }
     }
 
+    const snap: any = {};
+
     Array.from(this.siteRenderers.values()).forEach(sr => {
       sr.update();
+      if (!snap[(sr.site.atom.type.name as string)]) {
+        snap[(sr.site.atom.type.name as string)] = 0;
+      }
+
+      snap[(sr.site.atom.type.name as string)]++;// = snap[(sr.site.atom.type.name as string)]+1;
+
     });
+
+    console.log(snap);
   }
 
   onKeyDown(key: any) {
@@ -177,7 +191,7 @@ export class MFMRenderer {
           site.atom = new Atom(ElementTypes.SENTRY);
         } else if (this.keysHeld.has("p")) {
           site.atom = new Atom(ElementTypes.SEEKER, [{ row: 0, col: 0 }]);
-        } else if (this.keysHeld.has("d")) {
+        } else if (this.keysHeld.has("o")) {
           const rval = (Math.random() * 40) >> 0;
           site.atom = new Atom(ElementTypes.DATA, undefined, {
             value: rval
@@ -200,6 +214,8 @@ export class MFMRenderer {
           site.atom = new Atom(ElementTypes.STICKYMEMBRANE);
         } else if (this.keysHeld.has("q")) {
           console.log("DEBUG SITE:", site);
+        } else if (this.keysHeld.has("d")) {
+          site.atom = new Atom(ElementTypes.DYNAMICELEMENT, [this.dynamicDef]);
         } else {
 
           if (this.curSelectedElement && this.curSelectedElement !== "") {
@@ -216,3 +232,6 @@ export class MFMRenderer {
     }
   }
 }
+
+
+//1,2,3,4 > EMPTY : MOVE > 1,2,3,4 > 0

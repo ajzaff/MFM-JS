@@ -23,6 +23,7 @@ import { SorterElement } from "./elements/SorterElement";
 import { SortMasterElement } from "./elements/SortMasterElement";
 import { DecayWallElement } from "./elements/DecayWall";
 import { InputElement } from "./elements/InputElement";
+import { DynamicElement } from "./elements/DynamicElement";
 
 export interface IElementType {
   name: string;
@@ -55,7 +56,7 @@ export class ElementTypes {
   static LOOPSEED: IElementType = { name: "LOOP SEED", type: "Ls", class: LoopSeedElement, color: 0xFCC038 };
   static LOOPNUCLEUS: IElementType = { name: "LOOP NUCLEUS", type: "Ln", class: LoopNucleusElement, color: 0xcece24 }
   static STICKYMEMBRANE: IElementType = { name: "STICKY MEMBRANE", type: "Sm", class: StickyMembraneElement, color: 0x6D3D64 }
-
+  static DYNAMICELEMENT: IElementType = { name: "DYNAMICELEMENT", type: "Dy", class: DynamicElement, color: 0xc1d5de }
   static SORTER: IElementType = { name: "SORTER", type: "So", class: SorterElement, color: 0x7c1515 }
   static SORTMASTER: IElementType = { name: "SORT MASTER", type: "Sm", class: SortMasterElement, color: 0xd66633 }
 
@@ -83,6 +84,7 @@ export class ElementTypes {
     .set(ElementTypes.LOOPSEED.name, ElementTypes.LOOPSEED)
     .set(ElementTypes.LOOPNUCLEUS.name, ElementTypes.LOOPNUCLEUS)
     .set(ElementTypes.STICKYMEMBRANE.name, ElementTypes.STICKYMEMBRANE)
+    .set(ElementTypes.DYNAMICELEMENT.name, ElementTypes.DYNAMICELEMENT)
     .set(ElementTypes.SORTER.name, ElementTypes.SORTER)
     .set(ElementTypes.SORTMASTER.name, ElementTypes.SORTMASTER)
     .set(ElementTypes.DECAYWALL.name, ElementTypes.DECAYWALL);

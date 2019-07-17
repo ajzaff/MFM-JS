@@ -14,7 +14,8 @@ let app = new Vue({
       mfmRenderer: MFMRenderer,
       customSequence: "" as string,
       curSelectedElement: "" as string,
-      typeMap: ElementTypes.TYPES_MAP as Map<string, IElementType>
+      typeMap: ElementTypes.TYPES_MAP as Map<string, IElementType>,
+      dynamicDef: "" as string
     };
   },
   mounted() {
@@ -56,8 +57,8 @@ let app = new Vue({
       this.mfmRenderer.deconstruct();
       this.initTile();
     },
-    customSequence(val: string) {
-      this.mfmRenderer.customSequence = this.customSequence;
+    dynamicDef(val: string) {
+      this.mfmRenderer.dynamicDef = this.dynamicDef;
     }
   }
 });
